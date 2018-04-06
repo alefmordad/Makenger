@@ -2,8 +2,10 @@ package ir.alefmordad.tele.server;
 
 import ir.alefmordad.tele.core.entities.Message;
 import ir.alefmordad.tele.core.entities.User;
+import ir.alefmordad.tele.core.manager.MessageManager;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,7 @@ public class Service implements Runnable {
 
     private Tunnel tunnel;
     private static List<Tunnel> tunnels = new ArrayList<>();
+    private MessageManager messageManager = MessageManager.getInstance();
 
     public Service(Tunnel tunnel) {
         this.tunnel = tunnel;
@@ -22,6 +25,8 @@ public class Service implements Runnable {
         while (true) {
             try {
                 Message msg = tunnel.getReceiver().receive();
+                msg.setSent(true);
+                messageManager.create(msg);
                 List<Tunnel> destinations = findDestinations(msg.getDestination());
                 for (Tunnel destination : destinations) {
                     destination.getSender().send(msg);
@@ -30,6 +35,7 @@ public class Service implements Runnable {
                 tunnels.remove(tunnel);
                 break;
             } catch (ClassNotFoundException e) {
+            } catch (SQLException e) {
             }
         }
     }

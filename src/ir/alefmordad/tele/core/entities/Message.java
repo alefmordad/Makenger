@@ -9,8 +9,8 @@ public class Message extends Entity<Integer> {
     private User destination;
     private String content;
     private Date date;
-    private Boolean sent;
-    private Boolean received;
+    private Boolean sent = false;
+    private Boolean received = false;
 
     @Override
     public String toString() {
