@@ -7,7 +7,7 @@ import java.sql.*;
 public abstract class Dao<T extends Entity<I>, I> {
 
     protected Connection connection;
-    private String connectionUrl = "jdbc:mysql://localhost:3306/tele?user=root&password=";
+    private String connectionUrl = "jdbc:mysql://localhost:3306/makenger?user=root&password=";
 
     {
         try {

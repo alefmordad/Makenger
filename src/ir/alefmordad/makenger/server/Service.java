@@ -3,6 +3,7 @@ package ir.alefmordad.makenger.server;
 import ir.alefmordad.makenger.core.entities.Message;
 import ir.alefmordad.makenger.core.entities.User;
 import ir.alefmordad.makenger.core.manager.MessageManager;
+import ir.alefmordad.makenger.core.manager.UserManager;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -14,6 +15,7 @@ public class Service implements Runnable {
     private Tunnel tunnel;
     private static List<Tunnel> tunnels = new ArrayList<>();
     private MessageManager messageManager = MessageManager.getInstance();
+    private UserManager userManager = UserManager.getInstance();
 
     public Service(Tunnel tunnel) {
         this.tunnel = tunnel;
@@ -30,7 +32,7 @@ public class Service implements Runnable {
                 for (Tunnel destination : destinations) {
                     destination.getSender().send(msg);
                 }
-                if (destinations.size() == 0)
+                if (!isUserValid(msg.getDestination()))
                     messageManager.delete(msg.getId());
             } catch (IOException e) {
                 tunnels.remove(tunnel);
@@ -41,6 +43,10 @@ public class Service implements Runnable {
                 e.printStackTrace();
             }
         }
+    }
+
+    private boolean isUserValid(User destination) throws SQLException {
+        return userManager.read(destination.getId()) != null;
     }
 
     private List<Tunnel> findDestinations(User user) {
