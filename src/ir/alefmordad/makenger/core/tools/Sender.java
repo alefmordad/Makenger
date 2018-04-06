@@ -48,7 +48,7 @@ public class Sender implements Runnable {
         this.oos.flush();
     }
 
-    public void sendInfoToServer() throws IOException {
+    public void sendUserInfoToServer() throws IOException {
         this.oos.writeObject(client.getUser());
         this.oos.flush();
     }

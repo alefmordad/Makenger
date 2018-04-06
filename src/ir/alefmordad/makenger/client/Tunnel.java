@@ -8,16 +8,18 @@ import ir.alefmordad.makenger.core.tools.Sender;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Tunnel extends Client {
 
-    public Tunnel(String ip, int port) throws IOException {
+    public Tunnel(String ip, int port) throws IOException, SQLException {
         readUserInfo();
         Socket socket = new Socket(ip, port);
         sender = new Sender(this, socket.getOutputStream());
         receiver = new Receiver(this, socket.getInputStream());
         signIn();
+        receiver.fetch(this.user);
     }
 
     private void readUserInfo() {
@@ -31,7 +33,7 @@ public class Tunnel extends Client {
     }
 
     private void signIn() throws IOException {
-        sender.sendInfoToServer();
+        sender.sendUserInfoToServer();
         if (!receiver.receiveLoggedIn())
             throw new FakeUserException(user);
     }

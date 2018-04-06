@@ -22,7 +22,7 @@ public class Tunnel extends Client {
     }
 
     public void init() throws IOException, ClassNotFoundException, SQLException {
-        setUser(receiver.receiveInfoFromClient());
+        setUser(receiver.receiveUserInfoFromClient());
         User readUser = userManager.read(user.getId());
         if (readUser == null)
             signUp();

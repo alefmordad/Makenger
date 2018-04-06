@@ -2,8 +2,10 @@ package ir.alefmordad.makenger.core.manager;
 
 import ir.alefmordad.makenger.core.dao.Dao;
 import ir.alefmordad.makenger.core.entities.Entity;
+import ir.alefmordad.makenger.core.entities.Message;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public abstract class Manager<T extends Entity<I>, I> {
 

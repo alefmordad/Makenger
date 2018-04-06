@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.sql.SQLException;
+import java.util.List;
 
 public class Receiver implements Runnable {
 
@@ -50,18 +51,31 @@ public class Receiver implements Runnable {
     }
 
     private void updateMessage(Message message) {
-        try {
-            messageManager.update(message);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    messageManager.update(message);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
-    public User receiveInfoFromClient() throws IOException, ClassNotFoundException {
+    public User receiveUserInfoFromClient() throws IOException, ClassNotFoundException {
         return (User) ois.readObject();
     }
 
     public boolean receiveLoggedIn() throws IOException {
         return ois.readBoolean();
+    }
+
+    public void fetch(User user) throws SQLException {
+        List<Message> unReceivedMessages = messageManager.fetch(user);
+        unReceivedMessages.forEach(m -> System.out.println(m));
+        unReceivedMessages.forEach(m -> m.setReceived(true));
+        unReceivedMessages.forEach(m -> m.setSeen(true));
+        unReceivedMessages.forEach(m -> updateMessage(m));
     }
 }

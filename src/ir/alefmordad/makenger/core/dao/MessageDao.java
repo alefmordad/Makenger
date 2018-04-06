@@ -1,12 +1,16 @@
 package ir.alefmordad.makenger.core.dao;
 
+import ir.alefmordad.makenger.core.converters.ResultSetToIntegerConverter;
 import ir.alefmordad.makenger.core.converters.ResultSetToMessageConverter;
+import ir.alefmordad.makenger.core.converters.ResultSetToMessageListConverter;
 import ir.alefmordad.makenger.core.entities.Message;
+import ir.alefmordad.makenger.core.entities.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class MessageDao extends Dao<Message, Integer> {
 
@@ -80,9 +84,20 @@ public class MessageDao extends Dao<Message, Integer> {
         ps.setString(2, message.getDestination().getId());
         ps.setTimestamp(3, new Timestamp(message.getDate().getTime()));
         ResultSet rs = ps.executeQuery();
-        rs.next();
-        message.setId(rs.getInt(1));
+        message.setId(new ResultSetToIntegerConverter().convert(rs));
         rs.close();
         ps.close();
+    }
+
+    public List<Message> fetch(User user) throws SQLException {
+        String query = "select * from messages where dst_id=? and received=?";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setString(1, user.getId());
+        ps.setBoolean(2, false);
+        ResultSet rs = ps.executeQuery();
+        List<Message> messages = new ResultSetToMessageListConverter().convert(rs);
+        rs.close();
+        ps.close();
+        return messages;
     }
 }
