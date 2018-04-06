@@ -26,16 +26,19 @@ public class Service implements Runnable {
             try {
                 Message msg = tunnel.getReceiver().receive();
                 msg.setSent(true);
-                messageManager.create(msg);
                 List<Tunnel> destinations = findDestinations(msg.getDestination());
                 for (Tunnel destination : destinations) {
                     destination.getSender().send(msg);
                 }
+                if (destinations.size() == 0)
+                    messageManager.delete(msg.getId());
             } catch (IOException e) {
                 tunnels.remove(tunnel);
                 break;
             } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }

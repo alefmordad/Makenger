@@ -7,8 +7,6 @@ import java.sql.*;
 public abstract class Dao<T extends Entity<I>, I> {
 
     protected Connection connection;
-    protected PreparedStatement ps;
-    protected ResultSet rs;
     private String connectionUrl = "jdbc:mysql://localhost:3306/tele?user=root&password=";
 
     {
@@ -16,6 +14,7 @@ public abstract class Dao<T extends Entity<I>, I> {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             connection = DriverManager.getConnection(connectionUrl);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -30,9 +29,9 @@ public abstract class Dao<T extends Entity<I>, I> {
     @Override
     protected void finalize() {
         try {
-            ps.close();
             connection.close();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

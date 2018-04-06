@@ -1,9 +1,10 @@
 package ir.alefmordad.tele.server;
 
+import ir.alefmordad.tele.core.exceptions.FakeUserException;
+
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
 
 public class Server implements Runnable {
 
@@ -20,7 +21,13 @@ public class Server implements Runnable {
                 Tunnel tunnel = new Tunnel(serverSocket.accept());
                 new Thread(new Service(tunnel)).start();
             } catch (IOException e) {
+                e.printStackTrace();
             } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (FakeUserException e) {
+                System.err.println(e.getUser());
             }
         }
     }

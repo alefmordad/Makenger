@@ -10,8 +10,10 @@ public class ResultSetToUserConverter implements Converter<ResultSet, User> {
     @Override
     public User convert(ResultSet rs) throws SQLException {
         User user = new User();
-        rs.next();
+        if (!rs.next())
+            return null;
         user.setId(rs.getString(1));
+        user.setPassword(rs.getString(2));
         return user;
     }
 }

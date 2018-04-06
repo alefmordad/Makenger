@@ -15,7 +15,7 @@ public class Message extends Entity<Integer> {
 
     @Override
     public String toString() {
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         return "(" + sdf.format(date) + ") " + source.getId() + " : " + content;
     }
 

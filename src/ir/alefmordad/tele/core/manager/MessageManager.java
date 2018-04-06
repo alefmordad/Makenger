@@ -17,5 +17,4 @@ public class MessageManager extends Manager<Message, Integer> {
         setDao(MessageDao.getInstance());
     }
 
-
 }

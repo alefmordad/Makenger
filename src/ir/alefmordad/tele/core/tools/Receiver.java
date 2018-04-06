@@ -33,7 +33,9 @@ public class Receiver implements Runnable {
                 }
                 System.out.println(message);
             } catch (IOException e) {
+                e.printStackTrace();
             } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -48,18 +50,18 @@ public class Receiver implements Runnable {
     }
 
     private void updateMessage(Message message) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    messageManager.update(message);
-                } catch (SQLException e) {
-                }
-            }
-        }).start();
+        try {
+            messageManager.update(message);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public User receiveInfoFromClient() throws IOException, ClassNotFoundException {
         return (User) ois.readObject();
+    }
+
+    public boolean receiveLoggedIn() throws IOException {
+        return ois.readBoolean();
     }
 }

@@ -11,7 +11,8 @@ public class ResultSetToMessageConverter implements Converter<ResultSet, Message
     @Override
     public Message convert(ResultSet from) throws SQLException {
         Message msg = new Message();
-        from.next();
+        if (!from.next())
+            return null;
         msg.setId(from.getInt(1));
         msg.setSource(new User(from.getString(2)));
         msg.setDestination(new User(from.getString(3)));
