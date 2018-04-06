@@ -16,17 +16,19 @@ public class MessageDao extends Dao<Message, Integer> {
 
     private static MessageDao instance;
 
-    private MessageDao() {}
+    private MessageDao() {
+    }
 
     @Override
     public Message create(Message message) throws SQLException {
-        String query = "insert into messages(id,src_id,dst_id,content,date_) values(?,?,?,?,?)";
+        String query = "insert into messages(id,src_id,dst_id,content,date_,received) values(?,?,?,?,?,?)";
         ps = connection.prepareStatement(query);
         ps.setInt(1, message.getId());
         ps.setString(2, message.getSource().getId());
         ps.setString(3, message.getDestination().getId());
         ps.setString(4, message.getContent());
         ps.setDate(5, new java.sql.Date(message.getDate().getTime()));
+        ps.setBoolean(6, message.getReceived());
         ps.executeUpdate();
         return null;
     }
@@ -44,12 +46,14 @@ public class MessageDao extends Dao<Message, Integer> {
 
     @Override
     public void update(Message message) throws SQLException {
-        String query = "update messages set src_id=?, dst_id=?, content=?, date_=? where id=?";
+        String query = "update messages set src_id=?, dst_id=?, content=?, date_=?, received=? where id=?";
         ps = connection.prepareStatement(query);
         ps.setString(1, message.getSource().getId());
         ps.setString(2, message.getDestination().getId());
         ps.setString(3, message.getContent());
         ps.setDate(4, new Date(message.getDate().getTime()));
+        ps.setBoolean(5, message.getReceived());
+        ps.setInt(6, message.getId());
         ps.executeUpdate();
     }
 

@@ -18,6 +18,7 @@ public class ResultSetToMessageConverter implements Converter<ResultSet, Message
         msg.setDestination(new User(from.getString(3)));
         msg.setContent(from.getString(4));
         msg.setDate(from.getDate(5));
+        msg.setReceived(from.getBoolean(6));
         return msg;
     }
 

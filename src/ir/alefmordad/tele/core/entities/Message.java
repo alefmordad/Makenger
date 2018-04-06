@@ -9,12 +9,29 @@ public class Message extends Entity<Integer> {
     private User destination;
     private String content;
     private Date date;
-    private Boolean delivered;
+    private Boolean sent;
+    private Boolean received;
 
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
         return "(" + sdf.format(date) + ") " + source.getId() + " : " + content;
+    }
+
+    public Boolean getSent() {
+        return sent;
+    }
+
+    public void setSent(Boolean sent) {
+        this.sent = sent;
+    }
+
+    public Boolean getReceived() {
+        return received;
+    }
+
+    public void setReceived(Boolean received) {
+        this.received = received;
     }
 
     public User getSource() {
