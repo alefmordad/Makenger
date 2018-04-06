@@ -1,3 +1,5 @@
+package ir.alefmordad.tele.client;
+
 import java.io.IOException;
 
 public class ClientMain {

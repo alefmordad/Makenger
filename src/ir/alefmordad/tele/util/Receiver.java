@@ -1,3 +1,5 @@
+package ir.alefmordad.tele.util;
+
 import java.io.InputStream;
 import java.util.Scanner;
 

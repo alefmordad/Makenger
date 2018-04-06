@@ -1,3 +1,5 @@
+package ir.alefmordad.tele.server;
+
 import java.io.IOException;
 
 public class ServerMain {

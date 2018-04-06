@@ -1,3 +1,5 @@
+package ir.alefmordad.tele.util;
+
 import java.util.Date;
 
 public class Message {
