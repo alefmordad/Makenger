@@ -29,10 +29,4 @@ public class Client implements Runnable, Serializable {
         new Thread(receiver).start();
     }
 
-    @Override
-    public String toString() {
-        return "Client{" +
-                "user=" + user +
-                '}';
-    }
 }

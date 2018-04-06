@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Server implements Runnable {
-    private List<Client> clients = new ArrayList<>();
+    private List<Tunnel> tunnels = new ArrayList<>();
     private ServerSocket serverSocket;
 
     public Server(int port) throws IOException {
@@ -17,9 +17,9 @@ public class Server implements Runnable {
     public void run() {
         while (true) {
             try {
-                Client client = new Client(serverSocket.accept());
-                clients.add(client);
-                new Thread(new Service(clients)).start();
+                Tunnel tunnel = new Tunnel(serverSocket.accept());
+                tunnels.add(tunnel);
+                new Thread(new Service(tunnels)).start();
             } catch (IOException e) {
             } catch (ClassNotFoundException e) {
             }

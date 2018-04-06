@@ -8,20 +8,20 @@ import java.util.List;
 
 public class Service implements Runnable {
 
-    private Client client;
-    private List<Client> clients;
+    private Tunnel tunnel;
+    private List<Tunnel> tunnels;
 
-    public Service(List<Client> clients) {
-        this.client = clients.get(clients.size() - 1);
-        this.clients = clients;
+    public Service(List<Tunnel> tunnels) {
+        this.tunnel = tunnels.get(tunnels.size() - 1);
+        this.tunnels = tunnels;
     }
 
     @Override
     public void run() {
         while (true) {
             try {
-                Message msg = client.getReceiver().receive();
-                Client destination = findClient(msg.getDestination());
+                Message msg = tunnel.getReceiver().receive();
+                Tunnel destination = findClient(msg.getDestination());
                 destination.getSender().send(msg);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -32,10 +32,10 @@ public class Service implements Runnable {
         }
     }
 
-    private Client findClient(User user) {
-       for (Client client : clients) {
-           if (client.getUser().getId().equals(user.getId())){
-               return client;
+    private Tunnel findClient(User user) {
+       for (Tunnel tunnel : tunnels) {
+           if (tunnel.getUser().getId().equals(user.getId())){
+               return tunnel;
            }
        }
        return null;

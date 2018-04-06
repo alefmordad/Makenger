@@ -6,9 +6,9 @@ import ir.alefmordad.tele.util.Sender;
 import java.io.IOException;
 import java.net.Socket;
 
-public class Client extends ir.alefmordad.tele.util.Client {
+public class Tunnel extends ir.alefmordad.tele.util.Client {
 
-    public Client(Socket socket) throws IOException, ClassNotFoundException {
+    public Tunnel(Socket socket) throws IOException, ClassNotFoundException {
         sender = new Sender(this, socket.getOutputStream());
         receiver = new Receiver(socket.getInputStream());
         init();

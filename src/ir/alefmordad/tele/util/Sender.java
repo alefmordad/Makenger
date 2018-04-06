@@ -3,7 +3,6 @@ package ir.alefmordad.tele.util;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Scanner;
 

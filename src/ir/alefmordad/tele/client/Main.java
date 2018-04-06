@@ -2,11 +2,11 @@ package ir.alefmordad.tele.client;
 
 import java.io.IOException;
 
-public class ClientMain {
+public class Main {
 
     public static void main(String[] args) throws IOException {
-        Client client = new Client("localhost", 9090);
-        new Thread(client).start();
+        Tunnel tunnel = new Tunnel("localhost", 9090);
+        new Thread(tunnel).start();
     }
 
 }
