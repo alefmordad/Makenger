@@ -1,24 +1,34 @@
 package ir.alefmordad.tele.util;
 
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.Scanner;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 
 public class Receiver implements Runnable {
 
-    private Scanner scanner;
+    private ObjectInputStream ois;
 
-    public Receiver(InputStream inputStream) {
-        scanner = new Scanner(inputStream);
+    public Receiver(InputStream inputStream) throws IOException {
+        ois = new ObjectInputStream(inputStream);
     }
 
     @Override
     public void run() {
         while (true) {
-            System.out.println(receive());
+            try {
+                System.out.println(receive());
+            } catch (IOException e) {
+            } catch (ClassNotFoundException e) {
+            }
         }
     }
 
-    public String receive() {
-        return scanner.nextLine();
+    public Message receive() throws IOException, ClassNotFoundException {
+        return (Message) ois.readObject();
+    }
+
+    public User receiveInfoFromClient() throws IOException, ClassNotFoundException {
+        return (User) ois.readObject();
     }
 }

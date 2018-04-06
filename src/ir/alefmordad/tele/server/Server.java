@@ -21,7 +21,7 @@ public class Server implements Runnable {
                 clients.add(client);
                 new Thread(new Service(clients)).start();
             } catch (IOException e) {
-                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
             }
         }
     }

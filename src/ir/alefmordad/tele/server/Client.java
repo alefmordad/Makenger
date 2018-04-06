@@ -8,9 +8,14 @@ import java.net.Socket;
 
 public class Client extends ir.alefmordad.tele.util.Client {
 
-        public Client(Socket socket) throws IOException {
-        sender = new Sender(socket.getOutputStream());
+    public Client(Socket socket) throws IOException, ClassNotFoundException {
+        sender = new Sender(this, socket.getOutputStream());
         receiver = new Receiver(socket.getInputStream());
+        init();
+    }
+
+    public void init() throws IOException, ClassNotFoundException {
+        this.setUser(receiver.receiveInfoFromClient());
     }
 
 }
