@@ -3,7 +3,6 @@ package ir.alefmordad.tele.core.converters;
 import ir.alefmordad.tele.core.entities.Message;
 import ir.alefmordad.tele.core.entities.User;
 
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -19,6 +18,7 @@ public class ResultSetToMessageConverter implements Converter<ResultSet, Message
         msg.setContent(from.getString(4));
         msg.setDate(from.getDate(5));
         msg.setReceived(from.getBoolean(6));
+        msg.setSeen(from.getBoolean(7));
         return msg;
     }
 

@@ -14,17 +14,14 @@ public class UserDao extends Dao<User, String> {
     }
 
     @Override
-    public User create(User object) throws SQLException {
+    public void create(User object) throws SQLException {
         User user = read(object.getId());
         if (user == null) {
             String query = "insert into users(id) values(?)";
             ps = connection.prepareStatement(query);
             ps.setString(1, object.getId());
             ps.executeUpdate();
-        } else{
-            return user;
         }
-        return object;
     }
 
     @Override

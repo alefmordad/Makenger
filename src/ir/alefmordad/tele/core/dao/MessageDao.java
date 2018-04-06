@@ -3,6 +3,7 @@ package ir.alefmordad.tele.core.dao;
 import ir.alefmordad.tele.core.converters.ResultSetToMessageConverter;
 import ir.alefmordad.tele.core.entities.Message;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
@@ -20,8 +21,8 @@ public class MessageDao extends Dao<Message, Integer> {
     }
 
     @Override
-    public Message create(Message message) throws SQLException {
-        String query = "insert into messages(id,src_id,dst_id,content,date_,received) values(?,?,?,?,?,?)";
+    public void create(Message message) throws SQLException {
+        String query = "insert into messages(id,src_id,dst_id,content,date_,received,seen) values(?,?,?,?,?,?,?)";
         ps = connection.prepareStatement(query);
         ps.setInt(1, 0);
         ps.setString(2, message.getSource().getId());
@@ -29,8 +30,9 @@ public class MessageDao extends Dao<Message, Integer> {
         ps.setString(4, message.getContent());
         ps.setTimestamp(5, new Timestamp(message.getDate().getTime()));
         ps.setBoolean(6, message.getReceived());
+        ps.setBoolean(7, message.getSeen());
         ps.executeUpdate();
-        return null;
+        setIdAfterSave(message);
     }
 
     @Override
@@ -46,14 +48,15 @@ public class MessageDao extends Dao<Message, Integer> {
 
     @Override
     public void update(Message message) throws SQLException {
-        String query = "update messages set src_id=?, dst_id=?, content=?, date_=?, received=? where id=?";
+        String query = "update messages set src_id=?, dst_id=?, content=?, date_=?, received=?, seen=? where id=?";
         ps = connection.prepareStatement(query);
         ps.setString(1, message.getSource().getId());
         ps.setString(2, message.getDestination().getId());
         ps.setString(3, message.getContent());
         ps.setTimestamp(4, new Timestamp(message.getDate().getTime()));
         ps.setBoolean(5, message.getReceived());
-        ps.setInt(6, message.getId());
+        ps.setBoolean(6, message.getSeen());
+        ps.setInt(7, message.getId());
         ps.executeUpdate();
     }
 
@@ -65,4 +68,15 @@ public class MessageDao extends Dao<Message, Integer> {
         ps.executeUpdate();
     }
 
+    public void setIdAfterSave(Message message) throws SQLException {
+        String query = "select id from messages where src_id=? and dst_id=? and date_=?";
+        ps = connection.prepareStatement(query);
+        ps.setString(1, message.getSource().getId());
+        ps.setString(2, message.getDestination().getId());
+        ps.setTimestamp(3, new Timestamp(message.getDate().getTime()));
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        message.setId(rs.getInt(1));
+        rs.close();
+    }
 }

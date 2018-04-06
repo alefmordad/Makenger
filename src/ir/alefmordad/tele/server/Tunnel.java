@@ -15,7 +15,7 @@ public class Tunnel extends Client {
 
     public Tunnel(Socket socket) throws IOException, ClassNotFoundException {
         sender = new Sender(this, socket.getOutputStream());
-        receiver = new Receiver(socket.getInputStream());
+        receiver = new Receiver(this, socket.getInputStream());
         init();
     }
 
@@ -24,7 +24,6 @@ public class Tunnel extends Client {
         try {
             userManager.create(getUser());
         } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 

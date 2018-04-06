@@ -19,7 +19,7 @@ public abstract class Dao<T extends Entity<I>, I> {
         }
     }
 
-    public abstract T create(T object) throws SQLException;
+    public abstract void create(T object) throws SQLException;
 
     public abstract T read(I id) throws SQLException;
 

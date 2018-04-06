@@ -16,7 +16,7 @@ public class Tunnel extends Client {
 
         Socket socket = new Socket(ip, port);
         sender = new Sender(this, socket.getOutputStream());
-        receiver = new Receiver(socket.getInputStream());
+        receiver = new Receiver(this, socket.getInputStream());
 
         init();
     }

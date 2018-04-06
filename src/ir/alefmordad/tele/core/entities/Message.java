@@ -11,6 +11,7 @@ public class Message extends Entity<Integer> {
     private Date date;
     private Boolean sent = false;
     private Boolean received = false;
+    private Boolean seen = false;
 
     @Override
     public String toString() {
@@ -32,6 +33,14 @@ public class Message extends Entity<Integer> {
 
     public void setReceived(Boolean received) {
         this.received = received;
+    }
+
+    public Boolean getSeen() {
+        return seen;
+    }
+
+    public void setSeen(Boolean seen) {
+        this.seen = seen;
     }
 
     public User getSource() {
