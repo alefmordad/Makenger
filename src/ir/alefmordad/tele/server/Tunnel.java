@@ -26,7 +26,6 @@ public class Tunnel extends Client {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
 }

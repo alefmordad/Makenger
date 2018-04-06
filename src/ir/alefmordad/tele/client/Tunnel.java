@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class Tunnel extends Client {
 
     public Tunnel(String ip, int port) throws IOException {
-        signUp();
+        signIn();
 
         Socket socket = new Socket(ip, port);
         sender = new Sender(this, socket.getOutputStream());
@@ -21,7 +21,7 @@ public class Tunnel extends Client {
         init();
     }
 
-    private void signUp() {
+    private void signIn() {
         System.out.println("Enter Id: ");
         this.setUser(new User(new Scanner(System.in).nextLine()));
     }

@@ -4,16 +4,17 @@ import ir.alefmordad.tele.core.entities.Message;
 import ir.alefmordad.tele.core.entities.User;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Service implements Runnable {
 
     private Tunnel tunnel;
-    private List<Tunnel> tunnels;
+    private static List<Tunnel> tunnels = new ArrayList<>();
 
-    public Service(List<Tunnel> tunnels) {
-        this.tunnel = tunnels.get(tunnels.size() - 1);
-        this.tunnels = tunnels;
+    public Service(Tunnel tunnel) {
+        this.tunnel = tunnel;
+        Service.tunnels.add(tunnel);
     }
 
     @Override
@@ -24,11 +25,11 @@ public class Service implements Runnable {
                 Tunnel destination = findClient(msg.getDestination());
                 destination.getSender().send(msg);
             } catch (IOException e) {
-                e.printStackTrace();
+                tunnels.remove(tunnel);
+                System.out.println(tunnels.size());
+                break;
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
-
         }
     }
 
