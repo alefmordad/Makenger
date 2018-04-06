@@ -66,7 +66,7 @@ public class MessageDao extends Dao<Message, Integer> {
 
     @Override
     public void delete(Integer id) throws SQLException {
-        String query = "delete form messages where id=?";
+        String query = "delete from messages where id=?";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, id);
         ps.executeUpdate();
