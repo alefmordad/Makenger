@@ -1,6 +1,8 @@
 package ir.alefmordad.tele.util;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Message implements Serializable {
@@ -12,7 +14,8 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-       return date.toString() + "\n" + source.getId() + " : " + content;
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
+        return "(" + sdf.format(date) + ") " + source.getId() + " : " + content;
     }
 
     public User getSource() {
