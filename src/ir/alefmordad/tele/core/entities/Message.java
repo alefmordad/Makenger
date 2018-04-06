@@ -1,10 +1,9 @@
-package ir.alefmordad.tele.util;
+package ir.alefmordad.tele.core.entities;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Message implements Serializable {
+public class Message extends Entity<Integer> {
 
     private User source;
     private User destination;

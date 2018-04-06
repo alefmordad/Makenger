@@ -2,7 +2,7 @@ package ir.alefmordad.tele.server;
 
 import java.io.IOException;
 
-public class Main {
+public class Serve {
 
     public static void main(String[] args) throws IOException {
         Server server = new Server(9090);

@@ -1,4 +1,7 @@
-package ir.alefmordad.tele.util;
+package ir.alefmordad.tele.core.tools;
+
+import ir.alefmordad.tele.core.entities.Message;
+import ir.alefmordad.tele.core.entities.User;
 
 import java.io.IOException;
 import java.io.InputStream;

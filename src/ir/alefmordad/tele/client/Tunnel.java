@@ -1,14 +1,15 @@
 package ir.alefmordad.tele.client;
 
-import ir.alefmordad.tele.util.Receiver;
-import ir.alefmordad.tele.util.Sender;
-import ir.alefmordad.tele.util.User;
+import ir.alefmordad.tele.core.model.Client;
+import ir.alefmordad.tele.core.tools.Receiver;
+import ir.alefmordad.tele.core.tools.Sender;
+import ir.alefmordad.tele.core.entities.User;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Tunnel extends ir.alefmordad.tele.util.Client {
+public class Tunnel extends Client {
 
     public Tunnel(String ip, int port) throws IOException {
         signUp();
@@ -22,9 +23,7 @@ public class Tunnel extends ir.alefmordad.tele.util.Client {
 
     private void signUp() {
         System.out.println("Enter Id: ");
-        User user = new User();
-        user.setId(new Scanner(System.in).nextLine());
-        this.setUser(user);
+        this.setUser(new User(new Scanner(System.in).nextLine()));
     }
 
     private void init() throws IOException {

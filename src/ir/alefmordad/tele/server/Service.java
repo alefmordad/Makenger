@@ -1,7 +1,7 @@
 package ir.alefmordad.tele.server;
 
-import ir.alefmordad.tele.util.Message;
-import ir.alefmordad.tele.util.User;
+import ir.alefmordad.tele.core.entities.Message;
+import ir.alefmordad.tele.core.entities.User;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,10 +1,14 @@
-package ir.alefmordad.tele.util;
+package ir.alefmordad.tele.core.model;
+
+import ir.alefmordad.tele.core.entities.User;
+import ir.alefmordad.tele.core.tools.Receiver;
+import ir.alefmordad.tele.core.tools.Sender;
 
 import java.io.Serializable;
 
 public class Client implements Runnable, Serializable {
 
-    private User user;
+    protected User user;
     protected Sender sender;
     protected Receiver receiver;
 
@@ -14,11 +18,9 @@ public class Client implements Runnable, Serializable {
     public Receiver getReceiver() {
         return receiver;
     }
-
     public User getUser() {
         return user;
     }
-
     public void setUser(User user) {
         this.user = user;
     }
