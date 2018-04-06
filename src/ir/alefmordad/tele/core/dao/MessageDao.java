@@ -19,7 +19,7 @@ public class MessageDao extends Dao<Message, Integer> {
     private MessageDao() {}
 
     @Override
-    public void create(Message message) throws SQLException {
+    public Message create(Message message) throws SQLException {
         String query = "insert into messages(id,src_id,dst_id,content,date_) values(?,?,?,?,?)";
         ps = connection.prepareStatement(query);
         ps.setInt(1, message.getId());
@@ -28,6 +28,7 @@ public class MessageDao extends Dao<Message, Integer> {
         ps.setString(4, message.getContent());
         ps.setDate(5, new java.sql.Date(message.getDate().getTime()));
         ps.executeUpdate();
+        return null;
     }
 
     @Override

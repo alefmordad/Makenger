@@ -22,24 +22,26 @@ public class Service implements Runnable {
         while (true) {
             try {
                 Message msg = tunnel.getReceiver().receive();
-                Tunnel destination = findClient(msg.getDestination());
-                destination.getSender().send(msg);
+                List<Tunnel> destinations = findDestinations(msg.getDestination());
+                for (Tunnel destination : destinations) {
+                    destination.getSender().send(msg);
+                }
             } catch (IOException e) {
                 tunnels.remove(tunnel);
-                System.out.println(tunnels.size());
                 break;
             } catch (ClassNotFoundException e) {
             }
         }
     }
 
-    private Tunnel findClient(User user) {
-       for (Tunnel tunnel : tunnels) {
-           if (tunnel.getUser().getId().equals(user.getId())){
-               return tunnel;
-           }
-       }
-       return null;
+    private List<Tunnel> findDestinations(User user) {
+        List<Tunnel> destinations = new ArrayList<>();
+        for (Tunnel tunnel : tunnels) {
+            if (tunnel.getUser().getId().equals(user.getId())) {
+                destinations.add(tunnel);
+            }
+        }
+        return destinations;
     }
 
 }
