@@ -7,7 +7,7 @@ import ir.alefmordad.makenger.core.entities.User;
 import java.sql.SQLException;
 import java.util.List;
 
-public class MessageManager extends Manager<Message, Integer> {
+public class MessageManager extends Manager<Message, Long> {
 
     private static MessageManager instance;
 

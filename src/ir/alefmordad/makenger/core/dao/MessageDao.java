@@ -1,6 +1,6 @@
 package ir.alefmordad.makenger.core.dao;
 
-import ir.alefmordad.makenger.core.util.converters.rowmapper.IntegerRowMapper;
+import ir.alefmordad.makenger.core.util.converters.rowmapper.LongRowMapper;
 import ir.alefmordad.makenger.core.util.converters.rowmapper.MessageRowMapper;
 import ir.alefmordad.makenger.core.util.converters.rowmapper.MessageListRowMapper;
 import ir.alefmordad.makenger.core.entities.Message;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class MessageDao extends Dao<Message, Integer> {
+public class MessageDao extends Dao<Message, Long> {
 
     public static MessageDao getInstance() {
         if (instance == null)
@@ -42,10 +42,10 @@ public class MessageDao extends Dao<Message, Integer> {
     }
 
     @Override
-    public Message read(Integer id) throws SQLException {
+    public Message read(Long id) throws SQLException {
         String query = "select * from messages where id=?";
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, id);
+        ps.setLong(1, id);
         ResultSet rs = ps.executeQuery();
         Message msg = new MessageRowMapper().convert(rs);
         rs.close();
@@ -63,16 +63,16 @@ public class MessageDao extends Dao<Message, Integer> {
         ps.setTimestamp(4, new Timestamp(message.getDate().getTime()));
         ps.setBoolean(5, message.getReceived());
         ps.setBoolean(6, message.getSeen());
-        ps.setInt(7, message.getId());
+        ps.setLong(7, message.getId());
         ps.executeUpdate();
         ps.close();
     }
 
     @Override
-    public void delete(Integer id) throws SQLException {
+    public void delete(Long id) throws SQLException {
         String query = "delete from messages where id=?";
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, id);
+        ps.setLong(1, id);
         ps.executeUpdate();
         ps.close();
     }
@@ -84,7 +84,7 @@ public class MessageDao extends Dao<Message, Integer> {
         ps.setString(2, message.getDestination().getId());
         ps.setTimestamp(3, new Timestamp(message.getDate().getTime()));
         ResultSet rs = ps.executeQuery();
-        message.setId(new IntegerRowMapper().convert(rs));
+        message.setId(new LongRowMapper().convert(rs));
         rs.close();
         ps.close();
     }

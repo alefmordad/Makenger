@@ -3,7 +3,7 @@ package ir.alefmordad.makenger.core.entities;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Message extends Entity<Integer> {
+public class Message extends Entity<Long> {
 
     private User source;
     private User destination;
