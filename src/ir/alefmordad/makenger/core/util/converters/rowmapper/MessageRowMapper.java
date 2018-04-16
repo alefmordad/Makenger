@@ -1,4 +1,4 @@
-package ir.alefmordad.makenger.core.converters;
+package ir.alefmordad.makenger.core.util.converters.rowmapper;
 
 import ir.alefmordad.makenger.core.entities.Message;
 import ir.alefmordad.makenger.core.entities.User;
@@ -6,7 +6,7 @@ import ir.alefmordad.makenger.core.entities.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ResultSetToMessageConverter implements Converter<ResultSet, Message> {
+public class MessageRowMapper implements RowMapper<Message> {
 
     @Override
     public Message convert(ResultSet from) throws SQLException {

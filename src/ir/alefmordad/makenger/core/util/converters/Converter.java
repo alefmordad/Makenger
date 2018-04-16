@@ -1,6 +1,5 @@
-package ir.alefmordad.makenger.core.converters;
+package ir.alefmordad.makenger.core.util.converters;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 public interface Converter<F, T> {

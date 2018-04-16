@@ -1,7 +1,7 @@
 package ir.alefmordad.makenger.server;
 
 import ir.alefmordad.makenger.core.entities.User;
-import ir.alefmordad.makenger.core.exceptions.FakeUserException;
+import ir.alefmordad.makenger.core.util.exceptions.FakeUserException;
 import ir.alefmordad.makenger.core.manager.UserManager;
 import ir.alefmordad.makenger.core.model.Client;
 import ir.alefmordad.makenger.core.tools.Receiver;
@@ -11,11 +11,11 @@ import java.io.IOException;
 import java.net.Socket;
 import java.sql.SQLException;
 
-public class Tunnel extends Client {
+public class Channel extends Client {
 
     private UserManager userManager = UserManager.getInstance();
 
-    public Tunnel(Socket socket) throws IOException, ClassNotFoundException, SQLException {
+    public Channel(Socket socket) throws IOException, ClassNotFoundException, SQLException {
         sender = new Sender(this, socket.getOutputStream());
         receiver = new Receiver(this, socket.getInputStream());
         init();

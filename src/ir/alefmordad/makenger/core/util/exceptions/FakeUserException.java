@@ -1,4 +1,4 @@
-package ir.alefmordad.makenger.core.exceptions;
+package ir.alefmordad.makenger.core.util.exceptions;
 
 import ir.alefmordad.makenger.core.entities.User;
 

@@ -1,6 +1,6 @@
 package ir.alefmordad.makenger.server;
 
-import ir.alefmordad.makenger.core.exceptions.FakeUserException;
+import ir.alefmordad.makenger.core.util.exceptions.FakeUserException;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -18,8 +18,8 @@ public class Server implements Runnable {
     public void run() {
         while (true) {
             try {
-                Tunnel tunnel = new Tunnel(serverSocket.accept());
-                new Thread(new Service(tunnel)).start();
+                Channel channel = new Channel(serverSocket.accept());
+                new Thread(new Service(channel)).start();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {

@@ -1,6 +1,6 @@
 package ir.alefmordad.makenger.core.dao;
 
-import ir.alefmordad.makenger.core.converters.ResultSetToUserConverter;
+import ir.alefmordad.makenger.core.util.converters.rowmapper.UserRowMapper;
 import ir.alefmordad.makenger.core.entities.User;
 
 import java.sql.PreparedStatement;
@@ -30,7 +30,7 @@ public class UserDao extends Dao<User, String> {
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, id);
         ResultSet rs = ps.executeQuery();
-        User user = new ResultSetToUserConverter().convert(rs);
+        User user = new UserRowMapper().convert(rs);
         rs.close();
         ps.close();
         return user;

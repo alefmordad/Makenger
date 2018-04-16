@@ -1,7 +1,7 @@
 package ir.alefmordad.makenger.client;
 
 import ir.alefmordad.makenger.core.entities.User;
-import ir.alefmordad.makenger.core.exceptions.FakeUserException;
+import ir.alefmordad.makenger.core.util.exceptions.FakeUserException;
 import ir.alefmordad.makenger.core.model.Client;
 import ir.alefmordad.makenger.core.tools.Receiver;
 import ir.alefmordad.makenger.core.tools.Sender;

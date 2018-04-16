@@ -12,30 +12,30 @@ import java.util.List;
 
 public class Service implements Runnable {
 
-    private Tunnel tunnel;
-    private static List<Tunnel> tunnels = new ArrayList<>();
+    private Channel channel;
+    private static List<Channel> channels = new ArrayList<>();
     private MessageManager messageManager = MessageManager.getInstance();
     private UserManager userManager = UserManager.getInstance();
 
-    public Service(Tunnel tunnel) {
-        this.tunnel = tunnel;
-        Service.tunnels.add(tunnel);
+    public Service(Channel channel) {
+        this.channel = channel;
+        Service.channels.add(channel);
     }
 
     @Override
     public void run() {
         while (true) {
             try {
-                Message msg = tunnel.getReceiver().receive();
+                Message msg = channel.getReceiver().receive();
                 msg.setSent(true);
-                List<Tunnel> destinations = findDestinations(msg.getDestination());
-                for (Tunnel destination : destinations) {
+                List<Channel> destinations = findDestinations(msg.getDestination());
+                for (Channel destination : destinations) {
                     destination.getSender().send(msg);
                 }
                 if (!isUserValid(msg.getDestination()))
                     messageManager.delete(msg.getId());
             } catch (IOException e) {
-                tunnels.remove(tunnel);
+                channels.remove(channel);
                 break;
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -49,11 +49,11 @@ public class Service implements Runnable {
         return userManager.read(destination.getId()) != null;
     }
 
-    private List<Tunnel> findDestinations(User user) {
-        List<Tunnel> destinations = new ArrayList<>();
-        for (Tunnel tunnel : tunnels) {
-            if (tunnel.getUser().getId().equals(user.getId())) {
-                destinations.add(tunnel);
+    private List<Channel> findDestinations(User user) {
+        List<Channel> destinations = new ArrayList<>();
+        for (Channel channel : channels) {
+            if (channel.getUser().getId().equals(user.getId())) {
+                destinations.add(channel);
             }
         }
         return destinations;

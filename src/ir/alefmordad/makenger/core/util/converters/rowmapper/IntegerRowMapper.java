@@ -1,10 +1,9 @@
-package ir.alefmordad.makenger.core.converters;
+package ir.alefmordad.makenger.core.util.converters.rowmapper;
 
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ResultSetToIntegerConverter implements Converter<ResultSet, Integer> {
+public class IntegerRowMapper implements RowMapper<Integer> {
 
     @Override
     public Integer convert(ResultSet from) throws SQLException {

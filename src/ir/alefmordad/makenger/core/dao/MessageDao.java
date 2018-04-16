@@ -1,8 +1,8 @@
 package ir.alefmordad.makenger.core.dao;
 
-import ir.alefmordad.makenger.core.converters.ResultSetToIntegerConverter;
-import ir.alefmordad.makenger.core.converters.ResultSetToMessageConverter;
-import ir.alefmordad.makenger.core.converters.ResultSetToMessageListConverter;
+import ir.alefmordad.makenger.core.util.converters.rowmapper.IntegerRowMapper;
+import ir.alefmordad.makenger.core.util.converters.rowmapper.MessageRowMapper;
+import ir.alefmordad.makenger.core.util.converters.rowmapper.MessageListRowMapper;
 import ir.alefmordad.makenger.core.entities.Message;
 import ir.alefmordad.makenger.core.entities.User;
 
@@ -47,7 +47,7 @@ public class MessageDao extends Dao<Message, Integer> {
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
-        Message msg = new ResultSetToMessageConverter().convert(rs);
+        Message msg = new MessageRowMapper().convert(rs);
         rs.close();
         ps.close();
         return msg;
@@ -84,7 +84,7 @@ public class MessageDao extends Dao<Message, Integer> {
         ps.setString(2, message.getDestination().getId());
         ps.setTimestamp(3, new Timestamp(message.getDate().getTime()));
         ResultSet rs = ps.executeQuery();
-        message.setId(new ResultSetToIntegerConverter().convert(rs));
+        message.setId(new IntegerRowMapper().convert(rs));
         rs.close();
         ps.close();
     }
@@ -95,7 +95,7 @@ public class MessageDao extends Dao<Message, Integer> {
         ps.setString(1, user.getId());
         ps.setBoolean(2, false);
         ResultSet rs = ps.executeQuery();
-        List<Message> messages = new ResultSetToMessageListConverter().convert(rs);
+        List<Message> messages = new MessageListRowMapper().convert(rs);
         rs.close();
         ps.close();
         return messages;
