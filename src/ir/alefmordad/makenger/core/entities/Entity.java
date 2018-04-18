@@ -5,6 +5,15 @@ import java.io.Serializable;
 public abstract class Entity<I> implements Serializable {
 
     I id;
+    Boolean deleted = false;
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
 
     public I getId() {
         return id;

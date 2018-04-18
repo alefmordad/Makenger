@@ -31,8 +31,8 @@ public abstract class Manager<T extends Entity<I>, I> {
         dao.update(entity);
     }
 
-    public void delete(I id) throws SQLException {
-        dao.delete(id);
+    public void delete(T entity) throws SQLException {
+        dao.delete(entity);
     }
 
 }

@@ -12,6 +12,33 @@ public class Message extends Entity<Long> {
     private Boolean sent = false;
     private Boolean received = false;
     private Boolean seen = false;
+    private Boolean visibleForMe = true;
+    private Message replyTo;
+    private User forwardFrom;
+
+    public Boolean getVisibleForMe() {
+        return visibleForMe;
+    }
+
+    public void setVisibleForMe(Boolean visibleForMe) {
+        this.visibleForMe = visibleForMe;
+    }
+
+    public Message getReplyTo() {
+        return replyTo;
+    }
+
+    public void setReplyTo(Message replyTo) {
+        this.replyTo = replyTo;
+    }
+
+    public User getForwardFrom() {
+        return forwardFrom;
+    }
+
+    public void setForwardFrom(User forwardFrom) {
+        this.forwardFrom = forwardFrom;
+    }
 
     @Override
     public String toString() {

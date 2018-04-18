@@ -24,7 +24,7 @@ public abstract class Dao<T extends Entity<I>, I> {
 
     public abstract void update(T object) throws SQLException;
 
-    public abstract void delete(I id) throws SQLException;
+    public abstract void delete(T object) throws SQLException;
 
     @Override
     protected void finalize() {
