@@ -29,7 +29,7 @@ public abstract class Service<T extends Entity<I>, I> {
         manager.update(entity);
     }
 
-    public void delete(I id) throws SQLException {
-        manager.delete(id);
+    public void delete(T entity) throws SQLException {
+        manager.delete(entity);
     }
 }

@@ -33,7 +33,7 @@ public class Service implements Runnable {
                     destination.getSender().send(msg);
                 }
                 if (!isUserValid(msg.getDestination()))
-                    messageManager.delete(msg.getId());
+                    messageManager.delete(msg);
             } catch (IOException e) {
                 channels.remove(channel);
                 break;

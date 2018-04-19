@@ -38,8 +38,14 @@ public class MessageDao extends Dao<Message, Long> {
         ps.setBoolean(7, message.getSeen());
         ps.setBoolean(8, message.getDeleted());
         ps.setBoolean(9, message.getVisibleForMe());
-        ps.setLong(10, message.getReplyTo().getId());
-        ps.setString(11, message.getForwardFrom().getId());
+        if (message.getReplyTo() == null)
+            ps.setLong(10, 0);
+        else
+            ps.setLong(10, message.getReplyTo().getId());
+        if (message.getForwardFrom() == null)
+            ps.setString(11, "");
+        else
+            ps.setString(11, message.getForwardFrom().getId());
         ps.executeUpdate();
         ps.close();
         setIdAfterSave(message);
@@ -94,7 +100,7 @@ public class MessageDao extends Dao<Message, Long> {
     }
 
     public List<Message> fetch(User user) throws SQLException {
-        String query = "SELECT * FROM messages AS mes1 LEFT JOIN messages AS mes2 ON mes1.replyTo=mes2.id WHERE dst_id=? AND received=? AND deleted=0";
+        String query = "SELECT * FROM messages AS mes1 LEFT JOIN messages AS mes2 ON mes1.replyTo=mes2.id WHERE mes1.dst_id=? AND mes1.received=? AND mes1.deleted=0";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, user.getId());
         ps.setBoolean(2, false);

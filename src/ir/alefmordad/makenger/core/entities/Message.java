@@ -45,12 +45,13 @@ public class Message extends Entity<Long> {
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         String message = "(" + sdf.format(date) + ") ";
         if (getReplyTo() != null) {
-            message.concat(" reply to :" + getReplyTo().getSource().getId() + " : " + getReplyTo().getContent());
-            message.concat(" " + source.getId() + " : " + content);
-        } else if (getForwardFrom() != null)
-            message.concat(" forward message from " + getForwardFrom().getId() + " : " + content);
-        else
-            message.concat(source.getId() + " : " + content);
+            message += (" reply to :" + getReplyTo().getSource().getId() + " : " + getReplyTo().getContent());
+            message += (" " + source.getId() + " : " + content);
+        } else if (getForwardFrom().getId() != "")
+            message += (" forward message from " + getForwardFrom().getId() + " : " + content);
+        else {
+            message += (source.getId() + " : " + content);
+        }
         return message;
     }
 
