@@ -53,7 +53,7 @@ public class MessageDao extends Dao<Message, Long> {
 
     @Override
     public Message read(Long id) throws SQLException {
-        String query = "SELECT * FROM messages AS mes1 LEFT JOIN messages AS mes2 ON mes1.replyTo=mes2.id WHERE id=? AND deleted=0 AND visible=0";
+        String query = "SELECT * FROM messages AS mes1 LEFT JOIN messages AS mes2 ON mes1.replyTo=mes2.id WHERE id=? AND deleted=0 AND visibleForMe=0";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setLong(1, id);
         ResultSet rs = ps.executeQuery();
@@ -78,11 +78,11 @@ public class MessageDao extends Dao<Message, Long> {
 
     @Override
     public void delete(Message message) throws SQLException {
-        String query = "UPDATE messages SET deleted=?, visible=? WHERE id=?";
+        String query = "UPDATE messages SET deleted=?, visibleForMe=0 WHERE id=? AND src_id=?";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setBoolean(1, message.getDeleted());
-        ps.setBoolean(2, message.getVisibleForMe());
-        ps.setLong(3, message.getId());
+        ps.setLong(2, message.getId());
+        ps.setString(3, message.getSource().getId());
         ps.executeUpdate();
         ps.close();
     }
@@ -100,10 +100,9 @@ public class MessageDao extends Dao<Message, Long> {
     }
 
     public List<Message> fetch(User user) throws SQLException {
-        String query = "SELECT * FROM messages AS mes1 LEFT JOIN messages AS mes2 ON mes1.replyTo=mes2.id WHERE mes1.dst_id=? AND mes1.received=? AND mes1.deleted=0";
+        String query = "SELECT * FROM messages AS mes1 LEFT JOIN messages AS mes2 ON mes1.replyTo=mes2.id WHERE mes1.dst_id=? AND mes1.received=0 AND mes1.deleted=0";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, user.getId());
-        ps.setBoolean(2, false);
         ResultSet rs = ps.executeQuery();
         List<Message> messages = new MessageListRowMapper().convert(rs);
         rs.close();

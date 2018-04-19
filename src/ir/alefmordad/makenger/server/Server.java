@@ -18,8 +18,7 @@ public class Server implements Runnable {
     public void run() {
         while (true) {
             try {
-                Channel channel = new Channel(serverSocket.accept());
-                new Thread(new Service(channel)).start();
+                new Thread(new Service(new Channel(serverSocket.accept()))).start();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {

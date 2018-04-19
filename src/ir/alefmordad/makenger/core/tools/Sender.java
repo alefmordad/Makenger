@@ -14,7 +14,6 @@ import java.util.Scanner;
 public class Sender implements Runnable {
 
     private ObjectOutputStream oos;
-    private Scanner console = new Scanner(System.in);
     private Client client;
     private MessageManager messageManager = MessageManager.getInstance();
 
@@ -25,8 +24,8 @@ public class Sender implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
-            try {
+        try (Scanner console = new Scanner(System.in)) {
+            while (true) {
                 String content = console.nextLine();
                 Message message = new Message();
                 message.setContent(content.substring(content.indexOf(" ") + 1));
@@ -35,11 +34,11 @@ public class Sender implements Runnable {
                 message.setDestination(new Mapper().map(content).getUser());
                 messageManager.create(message);
                 send(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

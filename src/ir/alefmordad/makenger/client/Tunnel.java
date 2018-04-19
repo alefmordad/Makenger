@@ -23,12 +23,13 @@ public class Tunnel extends Client {
     }
 
     private void readUserInfo() {
-        System.out.print("Enter Id : ");
         Scanner scanner = new Scanner(System.in);
-        User user = new User();
-        user.setId(scanner.nextLine());
+
+        System.out.print("Enter Id : ");
+        User user = new User(scanner.nextLine());
         System.out.print("Enter Password : ");
         user.setPassword(scanner.nextLine());
+
         this.setUser(user);
     }
 

@@ -6,9 +6,8 @@ import ir.alefmordad.makenger.core.entities.User;
 public class Mapper {
 
     public Client map(String msg) {
-        String id = msg.split(" ")[0];
         Client client = new Client();
-        client.setUser(new User(id));
+        client.setUser(new User(msg.split(" ")[0]));
         return client;
     }
 

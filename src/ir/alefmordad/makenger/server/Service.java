@@ -27,13 +27,15 @@ public class Service implements Runnable {
         while (true) {
             try {
                 Message msg = channel.getReceiver().receive();
-                msg.setSent(true);
-                List<Channel> destinations = findDestinations(msg.getDestination());
-                for (Channel destination : destinations) {
-                    destination.getSender().send(msg);
-                }
                 if (!isUserValid(msg.getDestination()))
                     messageManager.delete(msg);
+                else {
+                    msg.setSent(true);
+                    List<Channel> destinations = findDestinations(msg.getDestination());
+                    for (Channel destination : destinations) {
+                        destination.getSender().send(msg);
+                    }
+                }
             } catch (IOException e) {
                 channels.remove(channel);
                 break;

@@ -47,7 +47,7 @@ public class Message extends Entity<Long> {
         if (getReplyTo() != null) {
             message += (" reply to :" + getReplyTo().getSource().getId() + " : " + getReplyTo().getContent());
             message += (" " + source.getId() + " : " + content);
-        } else if (getForwardFrom().getId() != "")
+        } else if (getForwardFrom() != null && getForwardFrom().getId() != "")
             message += (" forward message from " + getForwardFrom().getId() + " : " + content);
         else {
             message += (source.getId() + " : " + content);

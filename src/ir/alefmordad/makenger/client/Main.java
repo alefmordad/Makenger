@@ -6,8 +6,7 @@ import java.sql.SQLException;
 public class Main {
 
     public static void main(String[] args) throws IOException, SQLException {
-        Tunnel tunnel = new Tunnel("localhost", 9090);
-        new Thread(tunnel).start();
+        new Thread(new Tunnel("localhost", 9090)).start();
     }
 
 }
