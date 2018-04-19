@@ -16,7 +16,7 @@ public class UserDao extends Dao<User, String> {
 
     @Override
     public void create(User object) throws SQLException {
-        String query = "insert into users(id,password) values(?,?)";
+        String query = "INSERT INTO users(id,password) VALUES(?,?)";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, object.getId());
         ps.setString(2, object.getPassword());
@@ -26,7 +26,7 @@ public class UserDao extends Dao<User, String> {
 
     @Override
     public User read(String id) throws SQLException {
-        String query = "select * from users where id=?";
+        String query = "SELECT * FROM users WHERE id=? AND deleted=0";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, id);
         ResultSet rs = ps.executeQuery();
@@ -38,7 +38,7 @@ public class UserDao extends Dao<User, String> {
 
     @Override
     public void update(User user) throws SQLException {
-        String query = "update users set password=? where id=?";
+        String query = "UPDATE users SET password=? WHERE id=?";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, user.getPassword());
         ps.setString(2, user.getId());
@@ -47,10 +47,11 @@ public class UserDao extends Dao<User, String> {
     }
 
     @Override
-    public void delete(String id) throws SQLException {
-        String query = "delete from users where id=?";
+    public void delete(User user) throws SQLException {
+        String query = "UPDATE users SET deleted=? WHERE id=?";
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setString(1, id);
+        ps.setBoolean(1, user.getDeleted());
+        ps.setString(2, user.getId());
         ps.executeUpdate();
         ps.close();
     }

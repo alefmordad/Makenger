@@ -27,7 +27,7 @@ public class MessageDao extends Dao<Message, Long> {
 
     @Override
     public void create(Message message) throws SQLException {
-        String query = "insert into messages(id,src_id,dst_id,content,date_,received,seen,deleted,visibleForMe,replyTo,forwardFrom) values(?,?,?,?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO messages(id,src_id,dst_id,content,date_,received,seen,deleted,visibleForMe,replyTo,forwardFrom) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, 0);
         ps.setString(2, message.getSource().getId());
@@ -47,7 +47,7 @@ public class MessageDao extends Dao<Message, Long> {
 
     @Override
     public Message read(Long id) throws SQLException {
-        String query = "select * from messages where id=? and deleted=0 and visible=0";
+        String query = "SELECT * FROM messages AS mes1 LEFT JOIN messages AS mes2 ON mes1.replyTo=mes2.id WHERE id=? AND deleted=0 AND visible=0";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setLong(1, id);
         ResultSet rs = ps.executeQuery();
@@ -59,7 +59,7 @@ public class MessageDao extends Dao<Message, Long> {
 
     @Override
     public void update(Message message) throws SQLException {
-        String query = "update messages set content=?, date_=?, received=?, seen=? where id=?";
+        String query = "UPDATE messages SET content=?, date_=?, received=?, seen=? WHERE id=?";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, message.getContent());
         ps.setTimestamp(2, new Timestamp(message.getDate().getTime()));
@@ -72,7 +72,7 @@ public class MessageDao extends Dao<Message, Long> {
 
     @Override
     public void delete(Message message) throws SQLException {
-        String query = "UPDATE messages SET deleted=?, visible=? where id=?";
+        String query = "UPDATE messages SET deleted=?, visible=? WHERE id=?";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setBoolean(1, message.getDeleted());
         ps.setBoolean(2, message.getVisibleForMe());
@@ -82,7 +82,7 @@ public class MessageDao extends Dao<Message, Long> {
     }
 
     public void setIdAfterSave(Message message) throws SQLException {
-        String query = "select id from messages where src_id=? and dst_id=? and date_=?";
+        String query = "SELECT id FROM messages WHERE src_id=? AND dst_id=? AND date_=?";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, message.getSource().getId());
         ps.setString(2, message.getDestination().getId());
@@ -94,7 +94,7 @@ public class MessageDao extends Dao<Message, Long> {
     }
 
     public List<Message> fetch(User user) throws SQLException {
-        String query = "select * from messages where dst_id=? and received=? and deleted=0";
+        String query = "SELECT * FROM messages AS mes1 LEFT JOIN messages AS mes2 ON mes1.replyTo=mes2.id WHERE dst_id=? AND received=? AND deleted=0";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, user.getId());
         ps.setBoolean(2, false);

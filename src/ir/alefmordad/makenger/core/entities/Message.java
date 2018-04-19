@@ -43,7 +43,15 @@ public class Message extends Entity<Long> {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-        return "(" + sdf.format(date) + ") " + source.getId() + " : " + content;
+        String message = "(" + sdf.format(date) + ") ";
+        if (getReplyTo() != null) {
+            message.concat(" reply to :" + getReplyTo().getSource().getId() + " : " + getReplyTo().getContent());
+            message.concat(" " + source.getId() + " : " + content);
+        } else if (getForwardFrom() != null)
+            message.concat(" forward message from " + getForwardFrom().getId() + " : " + content);
+        else
+            message.concat(source.getId() + " : " + content);
+        return message;
     }
 
     public Boolean getSent() {
