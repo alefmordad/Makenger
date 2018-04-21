@@ -87,6 +87,11 @@ public class MessageDao extends Dao<Message, Long> {
         ps.close();
     }
 
+    @Override
+    public List<Message> list(Message groupUsers) throws SQLException {
+        return null;
+    }
+
     public void setIdAfterSave(Message message) throws SQLException {
         String query = "SELECT id FROM messages WHERE src_id=? AND dst_id=? AND date_=?";
         PreparedStatement ps = connection.prepareStatement(query);

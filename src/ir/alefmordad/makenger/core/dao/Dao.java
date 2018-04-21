@@ -1,8 +1,11 @@
 package ir.alefmordad.makenger.core.dao;
 
 import ir.alefmordad.makenger.core.entities.Entity;
+import ir.alefmordad.makenger.core.entities.User;
+import ir.alefmordad.makenger.server.Channel;
 
 import java.sql.*;
+import java.util.List;
 
 public abstract class Dao<T extends Entity<I>, I> {
 
@@ -25,6 +28,8 @@ public abstract class Dao<T extends Entity<I>, I> {
     public abstract void update(T object) throws SQLException;
 
     public abstract void delete(T object) throws SQLException;
+
+    public abstract List<T> list(T groupUsers) throws SQLException;
 
     @Override
     protected void finalize() {

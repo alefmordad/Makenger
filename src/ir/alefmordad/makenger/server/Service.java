@@ -31,7 +31,11 @@ public class Service implements Runnable {
                     messageManager.delete(msg);
                 else {
                     msg.setSent(true);
-                    List<Channel> destinations = findDestinations(msg.getDestination());
+                    List<Channel> destinations;
+                    if (msg.getDestination().getIsGroup())
+                        destinations = findGroupDestinations(msg.getDestination());
+                    else
+                        destinations = findDestinations(msg.getDestination());
                     for (Channel destination : destinations) {
                         destination.getSender().send(msg);
                     }
@@ -58,6 +62,18 @@ public class Service implements Runnable {
                 destinations.add(channel);
             }
         }
+        return destinations;
+    }
+
+    private List<Channel> findGroupDestinations(User groupUsers) throws SQLException {
+        List<User> users = userManager.list(groupUsers);
+        List<Channel> destinations = new ArrayList<>();
+        for (User user : users)
+            for (Channel channel : channels) {
+                if (channel.getUser().getId().equals(user.getId())) {
+                    destinations.add(channel);
+                }
+            }
         return destinations;
     }
 

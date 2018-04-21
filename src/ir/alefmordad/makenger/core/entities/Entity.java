@@ -5,7 +5,7 @@ import java.io.Serializable;
 public abstract class Entity<I> implements Serializable {
 
     I id;
-    Boolean deleted = false;
+    private Boolean deleted = false;
 
     public Boolean getDeleted() {
         return deleted;

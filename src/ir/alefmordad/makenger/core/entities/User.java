@@ -3,6 +3,15 @@ package ir.alefmordad.makenger.core.entities;
 public class User extends Entity<String> {
 
     private String password;
+    private Boolean isGroup;
+
+    public Boolean getIsGroup() {
+        return isGroup;
+    }
+
+    public void setIsGroup(Boolean group) {
+        isGroup = group;
+    }
 
     public String getPassword() {
         return password;
