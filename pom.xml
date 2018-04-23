@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ir.maktab.massenger</groupId>
+    <groupId>ir.maktabsharif</groupId>
     <artifactId>Makenger</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -22,11 +22,10 @@
     </build>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.6</version>
+            <version>6.0.6</version>
         </dependency>
     </dependencies>
 
